@@ -3,34 +3,33 @@
 * **파일 형식**: `index.ts`
 * **컴파일 (Compile)**: 타입스크립트 파일을 자바스크립트 파일로 변환하는 것. (웹 브라우저는 `.ts` 파일을 읽지 못함)
 
-# TypeScript 환경 설정 및 컴파일 방법
-
----
+# TypeScript 프로젝트 초기 세팅
 
 ## 1. 프로젝트 초기화
-
-터미널에서 아래 명령어를 실행해 Node.js 패키지를 초기화합니다.
 
 ```bash
 npm init -y
 ```
 
+Node.js 패키지를 초기화하고 `package.json`을 생성한다.
 
 
 ## 2. TypeScript 설치
-
-개발 의존성으로 TypeScript 패키지를 설치합니다.
 
 ```bash
 npm install typescript --save-dev
 ```
 
-설치 완료 후 `package.json`에 아래와 같이 반영됩니다.
+개발 의존성(`devDependencies`)으로 설치한다. 빌드 결과물에는 포함되지 않는다.
+
+설치 후 `package.json` 예시:
 
 ```json
 {
   "name": "ts_ex_01",
   "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
   "devDependencies": {
     "typescript": "^6.0.3"
   }
@@ -38,86 +37,88 @@ npm install typescript --save-dev
 ```
 
 
+## 3. 컴파일 방법
 
-## 3. 컴파일 실행
-
-설치된 TypeScript 패키지(`tsc`)를 사용해 `.ts` 파일을 `.js` 파일로 변환합니다.
+TypeScript 파일을 JavaScript로 변환하는 과정을 **컴파일**이라 하고, 이때 사용하는 도구가 **컴파일러(`tsc`)** 다.
 
 ```bash
-npx tsc 컴파일경로
-# 예시
+# 파일 직접 지정
 npx tsc src/01/index.ts
 ```
 
-> 실행 시 지정된 경로에 `.js` 파일이 새로 생성됩니다.  
-> 기본값은 ES5 이전 코드 기준이므로, 별도 설정이 필요합니다.
+- 컴파일 후 동일 경로에 `.js` 파일이 생성된다.
+- 기본값은 **ES5 이전 기준**이므로, 별도 설정이 필요하다.
 
 
-
-## 4. 컴파일 환경 설정 (`tsconfig.json`)
-
-### 설정 파일 생성
+## 4. `tsconfig.json` 생성
 
 ```bash
 npx tsc --init
 ```
 
-### 설정 파일 (`tsconfig.json`)
+TypeScript 컴파일 환경설정은 `tsconfig.json`으로 관리한다.
+
+
+## 5. `tsconfig.json` 주요 옵션 설명
 
 ```json
 {
   "compilerOptions": {
 
-    // 파일 경로
-    "rootDir": "./src",       // 소스 파일 루트 위치
-    "outDir": "./dist",       // 컴파일 결과물 저장 위치
+    // 파일 경로 설정
+    "rootDir": "./src",       // TS 소스 파일 위치
+    "outDir": "./dist",       // 컴파일된 JS 출력 위치
 
     // 환경 설정
-    "module": "nodenext",
-    "target": "ESNext",
-    "types": [],
+    "module": "nodenext",     // 모듈 시스템 지정
+    "target": "ESNext",       // 출력 JS 버전 지정
+    "types": [],              // 자동 포함할 타입 패키지 지정
 
     // 출력 옵션
-    "sourceMap": true,        // 에러 추적용 맵 파일 생성
-    "declaration": true,
-    "declarationMap": true,
+    "sourceMap": true,        // .map 파일 생성 (디버깅용)
+    "declaration": true,      // .d.ts 타입 선언 파일 생성
+    "declarationMap": true,   // 선언 파일의 소스맵 생성
 
-    // 타입 체크 강화
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    // 엄격한 타입 검사
+    "noUncheckedIndexedAccess": true,     // 배열/객체 접근 시 undefined 가능성 체크
+    "exactOptionalPropertyTypes": true,   // 선택 속성을 더 엄격하게 검사
 
     // 권장 옵션
-    "strict": true,
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true
+    "strict": true,                       // 엄격 모드 전체 활성화
+    "jsx": "react-jsx",                   // JSX 변환 방식
+    "verbatimModuleSyntax": true,         // import type 구문 강제
+    "isolatedModules": true,              // 각 파일을 독립 모듈로 처리
+    "noUncheckedSideEffectImports": true, // 사이드 이펙트 import 체크
+    "moduleDetection": "force",           // 모든 파일을 모듈로 인식
+    "skipLibCheck": true                  // 외부 라이브러리 타입 검사 생략
   },
 
-  "include": ["src/**/*.ts"], // 컴파일 대상 파일 지정
-  "exclude": ["node_modules"] // 컴파일 제외 폴더 지정
+  // 컴파일 대상 파일 지정
+  "include": ["src/**/*.ts"],
+
+  // 컴파일 제외 파일 지정
+  "exclude": ["node_modules"]
 }
 ```
 
-
-
-## 5. 경로 와일드카드
+### 와일드카드 패턴
 
 | 패턴 | 의미 |
 |------|------|
 | `*` | 해당 폴더 안의 모든 파일 |
-| `**` | 깊이 상관없이 모든 하위 폴더 |
+| `**` | 모든 하위 폴더 (깊이 무관) |
 
 
-
-## 6. 설정 적용 및 마무리
-
-`tsconfig.json` 수정 후 아래 명령어로 전체 재컴파일합니다.
+## 6. 설정 적용 후 컴파일
 
 ```bash
 npx tsc
 ```
 
-컴파일 완료 후 `src` 폴더 내에 잘못 생성된 `.js` 파일 등 불필요한 파일은 삭제합니다.
+`tsconfig.json`의 설정을 반영해서 `src/` 안의 모든 `.ts` 파일을 컴파일하고, 결과물을 `dist/`에 출력한다.
+
+
+## 7. 마무리
+
+- 컴파일 후 불필요한 파일(ex. 설정 전에 생성된 `.js`)은 직접 삭제한다.
+- 이후에는 `npx tsc` 만으로 전체 프로젝트를 컴파일할 수 있다.
