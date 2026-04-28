@@ -65,11 +65,11 @@ TypeScript 컴파일 환경설정은 `tsconfig.json`으로 관리한다.
 {
   "compilerOptions": {
 
-    // 파일 경로 설정
+    //  파일 경로 설정
     "rootDir": "./src",       // TS 소스 파일 위치
     "outDir": "./dist",       // 컴파일된 JS 출력 위치
 
-    // 환경 설정
+    //  환경 설정
     "module": "nodenext",     // 모듈 시스템 지정
     "target": "ESNext",       // 출력 JS 버전 지정
     "types": [],              // 자동 포함할 타입 패키지 지정
@@ -79,7 +79,7 @@ TypeScript 컴파일 환경설정은 `tsconfig.json`으로 관리한다.
     "declaration": true,      // .d.ts 타입 선언 파일 생성
     "declarationMap": true,   // 선언 파일의 소스맵 생성
 
-    // 엄격한 타입 검사
+    //  엄격한 타입 검사
     "noUncheckedIndexedAccess": true,     // 배열/객체 접근 시 undefined 가능성 체크
     "exactOptionalPropertyTypes": true,   // 선택 속성을 더 엄격하게 검사
 
