@@ -19,7 +19,7 @@ let nul: null = null;
 // symbol
 let sym: symbol = Symbol();
 
-// 참조자료형 타입
+// 참조자료형 객체타입
 
 // 빈 객체
 let obj1: {} = {};
