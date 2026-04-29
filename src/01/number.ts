@@ -41,7 +41,15 @@ let obj4: { name: string; age: number; adult: boolean } = {
 };
 
 // 객체에 undefined 프로퍼티 추가
-let obj5: { name: string; age: number; adult: boolean; job: null } = {
+let obj5: { name: string; age: number; adult: boolean; job: undefined } = {
+  name: "Jack",
+  age: 32,
+  adult: false,
+  job: undefined,
+};
+
+// 객체에 null 프로퍼티 추가
+let obj6: { name: string; age: number; adult: boolean; job: null } = {
   name: "Jack",
   age: 32,
   adult: false,
@@ -49,7 +57,7 @@ let obj5: { name: string; age: number; adult: boolean; job: null } = {
 };
 
 // 객체에 프로퍼티 추가
-let obj6: { name: string; age: number; adult: boolean; job: { title: string; view: number } } = {
+let obj7: { name: string; age: number; adult: boolean; job: { title: string; view: number } } = {
   name: "Jack",
   age: 32,
   adult: false,
@@ -57,7 +65,7 @@ let obj6: { name: string; age: number; adult: boolean; job: { title: string; vie
 };
 
 // 객체 date 프로퍼티 추가
-let obj7: { name: string; age: number; adult: boolean; job: { title: string; view: number }; today: Date } = {
+let obj8: { name: string; age: number; adult: boolean; job: { title: string; view: number }; today: Date } = {
   name: "Jack",
   age: 32,
   adult: false,
